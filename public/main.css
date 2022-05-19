@@ -68,6 +68,14 @@ a, a:hover {
   color: var(--pink);
   transition: all 0.2s ease-in-out;
 }
+@media screen and (max-width: 1000px) {
+  .sidebar > ul > li > a > .title {
+    display: none;
+  }
+  .sidebar i {
+    margin-right: 0px;
+  }
+}
 ul, li {
   list-style: none;
 }
@@ -190,6 +198,9 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
 }
 .twit-footer > * {
   margin-right: 10px;
+}
+.twit-footer > * > i {
+  cursor: pointer;
 }
 .twit-img { text-align: center; }
 .twit-img img { max-width: 75%; }

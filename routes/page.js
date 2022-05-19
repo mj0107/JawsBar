@@ -16,13 +16,21 @@ router.get('/profile', isLoggedIn, (req, res) => {
   res.render('profile', { title: 'Profile - prj-name' });
 });
 
+router.get('/followings', isLoggedIn, (req, res) => {
+  res.render('followings', { title: 'Profile - prj-name' });
+});
+
+router.get('/followers', isLoggedIn, (req, res) => {
+  res.render('followers', { title: 'Profile - prj-name' });
+});
+
 router.get('/join', isNotLoggedIn, (req, res) => {
   res.render('join', { title: 'Join to - prj-name' });
 });
 
 router.get('/scrap', isLoggedIn, (req, res) => {
-  res.render('scrap', { title: 'Scrap'})
-})
+  res.render('scrap', { title: 'Scrap'});
+});
 
 router.get('/', async (req, res, next) => {
   try {
