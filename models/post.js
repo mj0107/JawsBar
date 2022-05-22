@@ -11,10 +11,10 @@ module.exports = class Post extends Sequelize.Model {
         type: Sequelize.STRING(200),
         allowNull: true,
       },
-      likeCounts: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      }
+      subContent: {
+        type: Sequelize.STRING(140),
+        allowNull: false,
+      },
     }, {
       sequelize,
       timestamps: true,

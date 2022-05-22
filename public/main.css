@@ -184,6 +184,11 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
   margin-right: 10px; 
   margin-bottom: 15px;
 }
+.twit-subContent {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 12px;
+  font-weight: 700;
+}
 .twit-follow {
   padding: 1px 5px;
   background: #fff;

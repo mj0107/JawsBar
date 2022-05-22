@@ -41,7 +41,6 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
       content: req.body.content,
       img: req.body.url,
       UserId: req.user.id,
-      likeCounts: 0,
     });
     const hashtags = req.body.content.match(/#[^\s#]*/g);
     if (hashtags) {
@@ -64,7 +63,8 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
 router.post('/share', isLoggedIn, async (req, res, next) => {
   try{
     const share = await Post.create({
-      content: req.body.ownerContent + "(" + req.body.owner +"로부터 공유됨)",
+      content: req.body.ownerContent,
+      subContent: `${req.body.owner} 로부터 공유됨`,
       UserId: req.user.id,
     });
     res.redirect('/');
