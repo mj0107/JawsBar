@@ -1,4 +1,5 @@
 const footers = document.querySelectorAll(".twit-footer");
+const sharingButtons = document.querySelectorAll('.twit-footer-share');
 
 footers.forEach(function (footer) {
   const icons = footer.querySelectorAll("i");
@@ -34,5 +35,30 @@ footers.forEach(function (footer) {
   scrap.addEventListener("mouseup", function() {
     this.classList.replace(`${scrap_class}-fill`, scrap_class);
     this.style.color = 'black';
+  });
+});
+
+sharingButtons.forEach((tag) => {
+  tag.addEventListener('click', () => {
+    const myId = document.querySelector('#my-id');
+
+    console.log(myId);
+
+    if(myId) {
+      const owner = tag.parentNode.parentElement.querySelector('.owner-name').value;
+      const ownerContent = tag.parentNode.parentElement.querySelector('.owner-content').value;
+
+      console.log(owner, ownerContent);
+
+      axios.post('/post/share', {
+        owner: owner,
+        ownerContent: ownerContent,
+      }).
+      then(() => {
+        location.reload();
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
   });
 });

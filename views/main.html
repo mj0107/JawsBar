@@ -38,6 +38,8 @@
     <div class="twit">
       <input type="hidden" value="{{twit.User.id}}" class="twit-user-id" />
       <input type="hidden" value="{{twit.id}}" class="twit-id" />
+      <input type="hidden" value="{{twit.User.nick}}" class="owner-name" />
+      <input type="hidden" value="{{twit.content}}" class="owner-content" />
       <div class="twit-author">{{twit.User.nick}}</div>
       {% if not followerIdList.includes(twit.User.id) and twit.User.id !==
       user.id %}
