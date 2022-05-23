@@ -9,6 +9,9 @@ body {
   display: flex;
   justify-content: center;
 }
+hr {
+  width: 100%;
+}
 .btn {
   display: inline-block;
   padding: 0 5px;
@@ -215,6 +218,32 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
 #hashtag-form { text-align: right; }
 footer { text-align: center; }
 /* ---------------------------------------------------------------- */
+
+
+/* -------------------------- follow -------------------------- */
+.follow-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.follow-info > * {
+  padding: 10px;
+}
+.follow-info > * > a{
+  font-size: 20px;
+  color: rgba(0,0,0,0.45);
+  font-weight: 600;
+}
+.nick {
+  padding: 5px;
+}
+.select {
+  /* border-bottom: 4px solid var(--pink); */
+  border-bottom: 4px solid var(--gray);
+}
+/* ------------------------------------------------------------ */
 
 /* --------------------------- aside --------------------------- */
 .aside {
