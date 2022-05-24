@@ -34,5 +34,10 @@ module.exports = class Post extends Sequelize.Model {
     // Post:Hashtag = N:M
     // PostHashtag 테이블을 통해 관리
     db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
+    db.Post.belongsToMany(db.User, {
+      foreignKey:'PostId',
+      as:'Likers',
+      through: 'likes',
+    });
   }
 };

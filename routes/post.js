@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { Post, Hashtag } = require('../models');
+const { User, Post, Hashtag } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -71,6 +71,26 @@ router.post('/share', isLoggedIn, async (req, res, next) => {
   } catch (error) {
     console.error(error);
     next(error);
+  }
+});
+
+router.post('/:id/like', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    const post = await Post.findOne({ where: { id: req.body.postId } });
+
+    await user.addLikedPost(parseInt(req.user.id, 10));
+    await post.addLiker(parseInt(req.body.postId, 10));
+
+    if(user) {
+      res.send('success');
+    } 
+    else {
+      res.status(404).send('no user and post');
+    }
+  } catch(err) {
+    console.error(err);
+    next(err);
   }
 });
 

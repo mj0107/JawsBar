@@ -1,5 +1,7 @@
 const footers = document.querySelectorAll(".twit-footer");
-const sharingButtons = document.querySelectorAll('.twit-footer-share');
+const sharingButtons = document.querySelectorAll(".twit-footer-share");
+const scrapButtons = document.querySelectorAll(".twit-footer-scrap");
+const likeButtons = document.querySelectorAll(".bi-suit-heart");
 
 footers.forEach(function (footer) {
   const icons = footer.querySelectorAll("i");
@@ -42,13 +44,9 @@ sharingButtons.forEach((tag) => {
   tag.addEventListener('click', () => {
     const myId = document.querySelector('#my-id');
 
-    console.log(myId);
-
     if(myId) {
       const owner = tag.parentNode.parentElement.querySelector('.owner-name').value;
       const ownerContent = tag.parentNode.parentElement.querySelector('.owner-content').value;
-
-      console.log(owner, ownerContent);
 
       axios.post('/post/share', {
         owner: owner,
@@ -59,6 +57,36 @@ sharingButtons.forEach((tag) => {
       }).catch((err) => {
         console.error(err);
       });
+    }
+  });
+});
+
+likeButtons.forEach((tag) => {
+  tag.addEventListener('click', () => {
+    const myId = document.querySelector('#my-id').value;
+    const postId = tag.parentNode.parentNode.parentNode.querySelector('.twit-id').value;
+
+    console.log(`myId: ${myId}, postId: ${postId}`);
+
+    if(myId) {
+      let isClicked = false;
+
+      if(tag.classList.contains('clicked')) isClicked = true;
+      else isClicked = false;
+      // console.log(isClicked);
+
+      if(isClicked) {
+        axios.post(`/post/${myId}/like`, {
+          userId: myId, // 좋아요 누른 사람의 id
+          postId: postId,
+        }).
+        then(() => {
+          console.log(`전송할 myId:${myId}, postId:${postId}`);
+          // location.reload();
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
     }
   });
 });
