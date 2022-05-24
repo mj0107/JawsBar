@@ -66,8 +66,6 @@ likeButtons.forEach((tag) => {
     const myId = document.querySelector('#my-id').value;
     const postId = tag.parentNode.parentNode.parentNode.querySelector('.twit-id').value;
 
-    console.log(`myId: ${myId}, postId: ${postId}`);
-
     if(myId) {
       let isClicked = false;
 
@@ -75,18 +73,17 @@ likeButtons.forEach((tag) => {
       else isClicked = false;
       // console.log(isClicked);
 
-      if(isClicked) {
-        axios.post(`/post/${myId}/like`, {
-          userId: myId, // 좋아요 누른 사람의 id
-          postId: postId,
-        }).
-        then(() => {
-          console.log(`전송할 myId:${myId}, postId:${postId}`);
-          // location.reload();
-        }).catch((err) => {
-          console.error(err);
-        });
-      }
+      axios.post(`/post/${myId}/like`, {
+        userId: myId, // 좋아요 누른 사람의 id
+        postId: postId, // 좋아요가 눌러진 post의 id
+        isClicked, // 클릭했는지, 해제했는지
+      }).
+      then(() => {
+        console.log(`전송할 myId:${myId}, postId:${postId}, isClicked:${isClicked}`);
+        // location.reload();
+      }).catch((err) => {
+        console.error(err);
+      });
     }
   });
 });

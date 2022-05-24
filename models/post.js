@@ -13,7 +13,8 @@ module.exports = class Post extends Sequelize.Model {
       },
       subContent: {
         type: Sequelize.STRING(140),
-        allowNull: false,
+        allowNull: true,
+        defaultValue: '',
       },
     }, {
       sequelize,
