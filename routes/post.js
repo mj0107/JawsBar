@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -62,7 +61,7 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
 });
 
 router.post('/share', isLoggedIn, async (req, res, next) => {
-  try{
+  try {
     const share = await Post.create({
       content: req.body.ownerContent,
       subContent: `${req.body.owner} 로부터 공유됨`,
@@ -81,22 +80,28 @@ router.post('/:id/like', isLoggedIn, async (req, res, next) => {
     const post = await Post.findOne({ where: { id: req.body.postId } });
     const isClicked = req.body.isClicked;
 
-    if(user && post) {
-      if(isClicked) {
+    if (user && post) {
+      if (isClicked) {
         await user.addLikedPost(parseInt(req.body.postId, 10));
-      //await post.addLiker(parseInt(req.user.id, 10));
+        //await post.addLiker(parseInt(req.user.id, 10));
       }
       else {
         await sequelize.models.likes.destroy({
-          where: {postId: req.body.postId, userId: req.user.id}
+          where: { postId: req.body.postId, userId: req.user.id }
         });
       }
-      res.send('success');
-    } 
+      const count = await sequelize.models.likes.findAndCountAll({
+        where: {
+          postId: req.body.postId,
+        }
+      });
+      await Post.update({ likeCounts: count.count }, { where: { id: parseInt(req.body.postId, 10) } });
+      res.send({ cnt: count.count });
+    }
     else {
       res.status(404).send('no user and post');
     }
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     next(err);
   }

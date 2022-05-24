@@ -16,6 +16,11 @@ module.exports = class Post extends Sequelize.Model {
         allowNull: true,
         defaultValue: '',
       },
+      likeCounts: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
     }, {
       sequelize,
       timestamps: true,

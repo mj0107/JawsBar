@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, User, Hashtag } = require('../models');
+const { Post, User, Hashtag, sequelize } = require('../models');
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/join', isNotLoggedIn, (req, res) => {
 });
 
 router.get('/scrap', isLoggedIn, (req, res) => {
-  res.render('scrap', { title: 'Scrap'});
+  res.render('scrap', { title: 'Scrap' });
 });
 
 router.get('/', async (req, res, next) => {
@@ -41,9 +41,11 @@ router.get('/', async (req, res, next) => {
       },
       order: [['createdAt', 'DESC']],
     });
+
     res.render('main', {
       title: 'Jaws bar',
       twits: posts,
+      // likes: likes,
     });
   } catch (err) {
     console.error(err);

@@ -11,6 +11,8 @@ footers.forEach(function (footer) {
   let sharing_class = sharing.classList.item(1);
   let scrap_class = scrap.classList.item(1);
 
+  if(heart.classList.contains('clicked')) heart.style.color = 'red';
+
   heart.addEventListener("click", function() {
     this.classList.toggle("clicked");
     if(this.classList.contains("clicked")) {
@@ -65,6 +67,7 @@ likeButtons.forEach((tag) => {
   tag.addEventListener('click', () => {
     const myId = document.querySelector('#my-id').value;
     const postId = tag.parentNode.parentNode.parentNode.querySelector('.twit-id').value;
+    const likeCounts = tag.parentNode.querySelector('.likeCounts');
 
     if(myId) {
       let isClicked = false;
@@ -78,8 +81,10 @@ likeButtons.forEach((tag) => {
         postId: postId, // 좋아요가 눌러진 post의 id
         isClicked, // 클릭했는지, 해제했는지
       }).
-      then(() => {
+      then((res) => {
         console.log(`전송할 myId:${myId}, postId:${postId}, isClicked:${isClicked}`);
+        const cnt = parseInt(res.data.cnt, 10);
+        likeCounts.innerHTML = cnt;
         // location.reload();
       }).catch((err) => {
         console.error(err);
