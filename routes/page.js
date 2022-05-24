@@ -42,10 +42,12 @@ router.get('/', async (req, res, next) => {
       order: [['createdAt', 'DESC']],
     });
 
+    const likes = await sequelize.models.likes.findAll();
+
     res.render('main', {
       title: 'Jaws bar',
       twits: posts,
-      // likes: likes,
+      likes: likes,
     });
   } catch (err) {
     console.error(err);
