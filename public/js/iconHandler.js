@@ -47,9 +47,15 @@ footers.forEach(function (footer) {
 scrapButtons.forEach((tag) => {
   tag.addEventListener('click', () => {
     const myId = document.querySelector('#my-id');
-    const image = tag.parentNode.parentElement.querySelector('img').src;
+    const image = tag.parentNode.parentElement?.querySelector('img')?.src;
+    let imgSrc = null;
 
-    const imgSrc = image.substr(image.indexOf('/img'));
+    if (image === undefined) {
+      imgSrc = null;
+    }
+    else {
+      imgSrc = image.substr(image.indexOf('/img'));
+    }
 
     if (myId) {
       const owner = tag.parentNode.parentElement.querySelector('.owner-name').value;
@@ -78,9 +84,15 @@ sharingButtons.forEach((tag) => {
     if (myId) {
       const owner = tag.parentNode.parentElement.querySelector('.owner-name').value;
       const ownerContent = tag.parentNode.parentElement.querySelector('.owner-content').value;
-      const image = tag.parentNode.parentElement.querySelector('img').src;
+      const image = tag.parentNode.parentElement?.querySelector('img')?.src;
+      let imgSrc = null;
 
-      const imgSrc = image.substr(image.indexOf('/img'));
+      if (image === undefined) {
+        imgSrc = null;
+      }
+      else {
+        imgSrc = image.substr(image.indexOf('/img'));
+      }
 
       if (confirm("공유 하시겠습니까?")) {
         axios.post('/post/share', {
