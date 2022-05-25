@@ -55,9 +55,10 @@ module.exports = class User extends Sequelize.Model {
       through: 'Follow',
     });
     db.User.belongsToMany(db.Post, {
-      foreignKey:'UserId',
-      as:'LikedPosts',
+      foreignKey: 'UserId',
+      as: 'LikedPosts',
       through: 'likes',
     });
+    db.User.hasMany(db.Scrap);
   }
 };

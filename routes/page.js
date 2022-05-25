@@ -1,6 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
-const { Post, User, Hashtag, sequelize } = require('../models');
+const { Post, User, Hashtag, Scrap, sequelize } = require('../models');
 
 const router = express.Router();
 
@@ -13,23 +13,38 @@ router.use((req, res, next) => {
 });
 
 router.get('/profile', isLoggedIn, (req, res) => {
-  res.render('profile', { title: 'Profile - prj-name' });
+  res.render('profile', { title: 'Profile' });
 });
 
 router.get('/followings', isLoggedIn, (req, res) => {
-  res.render('followings', { title: 'Profile - prj-name' });
+  res.render('followings', { title: 'Followings' });
 });
 
 router.get('/followers', isLoggedIn, (req, res) => {
-  res.render('followers', { title: 'Profile - prj-name' });
+  res.render('followers', { title: 'Followers' });
 });
 
 router.get('/join', isNotLoggedIn, (req, res) => {
-  res.render('join', { title: 'Join to - prj-name' });
+  res.render('join', { title: 'Join to - JawsBar' });
 });
 
-router.get('/scrap', isLoggedIn, (req, res) => {
-  res.render('scrap', { title: 'Scrap' });
+router.get('/scrap', async (req, res, next) => {
+  try {
+    const scraps = await Scrap.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'nick'],
+      },
+      order: [['createdAt', 'DESC']],
+    });
+    res.render('scrap', {
+      title: 'Scraps',
+      scraps: scraps,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
 router.get('/', async (req, res, next) => {
@@ -45,7 +60,7 @@ router.get('/', async (req, res, next) => {
     const likes = await sequelize.models.likes.findAll();
 
     res.render('main', {
-      title: 'Jaws bar',
+      title: 'Jawsbar',
       twits: posts,
       likes: likes,
     });

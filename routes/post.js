@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const { User, Post, Hashtag, sequelize } = require('../models');
+const { User, Post, Hashtag, Scrap, sequelize } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -104,6 +104,20 @@ router.post('/:id/like', isLoggedIn, async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
+  }
+});
+
+router.post('/scrap', isLoggedIn, upload2.none(), async (req, res, next) => {
+  try {
+    const scrap = await Scrap.create({
+      content: req.body.ownerContent,
+      subContent: `${req.body.owner} 의 포스트 스크랩`,
+      UserId: req.user.id,
+    });
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
 });
 

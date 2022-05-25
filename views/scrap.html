@@ -1,7 +1,29 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="timeline">
-  <div class="scraps">
-    <h1>No Saving Scraps</h1>
+  <div class="twits">
+    <form id="hashtag-form" action="/hashtag">
+      <input type="text" name="hashtag" placeholder="태그 검색" />
+      <button class="btn">검색</button>
+    </form>
+    {% for scrap in scraps %}
+    {% if scrap.User.id == user.id %}
+    <div class="twit">
+      <div class="twit-author">{{scrap.User.nick}}</div>
+      {% if not followerIdList.includes(scrap.User.id) and scrap.User.id !==
+      user.id %}
+      <button class="twit-follow">팔로우하기</button>
+      {% endif %}
+
+      <div class="twit-content">{{scrap.content}}</div>
+      <div class="twit-subContent">{{scrap.subContent}}</div>
+
+      {% if scrap.img %}
+      <div class="twit-img"><img src="{{scrap.img}}" alt="섬네일" /></div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
   </div>
 </div>
+{% endblock %} {% block script %}
 {% endblock %}
