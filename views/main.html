@@ -49,20 +49,16 @@
       <div class="twit-subContent">{{twit.subContent}}</div>
       <div class="twit-footer">
         <div class="twit-footer-like">
-          <script>check = false;</script>
+          <i class="bi bi-suit-heart heart" id="id-{{twit.id}}"></i>
           {% for like in likes %}
             {% if like.UserId === user.id and like.PostId === twit.id %}
-              <script>check = true;</script>
+              <script>
+                clickedIcon = document.querySelector("#id-{{twit.id}}");
+                clickedIcon.classList.replace('bi-suit-heart', 'bi-suit-heart-fill');
+                clickedIcon.classList.add('clicked');
+              </script>
             {% endif %}
           {% endfor %}
-          <i class="bi bi-suit-heart heart"></i>
-          <script>
-            if(check) {
-              const icon = document.querySelector('.twit-footer-like > i');
-              icon.classList.replace('bi-suit-heart', 'bi-suit-heart-fill');
-              icon.classList.add('clicked');
-            }
-          </script>
           <span class="likeCounts">{{twit.likeCounts}}</span>
         </div>
         <div class="twit-footer-share">
