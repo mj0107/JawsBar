@@ -66,6 +66,7 @@ router.post('/share', isLoggedIn, async (req, res, next) => {
       content: req.body.ownerContent,
       subContent: `${req.body.owner} 로부터 공유됨`,
       UserId: req.user.id,
+      img: req.body.img,
     });
     res.redirect('/');
   } catch (error) {
@@ -113,6 +114,7 @@ router.post('/scrap', isLoggedIn, upload2.none(), async (req, res, next) => {
       content: req.body.ownerContent,
       subContent: `${req.body.owner} 의 포스트 스크랩`,
       UserId: req.user.id,
+      img: req.body.img,
     });
     res.redirect('/');
   } catch (error) {
